@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GoodFood">
         <activity
-            android:name=".SplashActivity"
+            android:name=".view.activities.activities.SplashActivity"
             android:theme="@style/Theme.GoodFood.NoActionBar"
             android:exported="true">
         <intent-filter>
@@ -20,7 +20,7 @@
         </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".view.activities.activities.MainActivity"
             android:label="@string/app_name">
 
         </activity>

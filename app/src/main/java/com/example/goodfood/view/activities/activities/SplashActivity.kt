@@ -1,4 +1,4 @@
-package com.example.goodfood
+package com.example.goodfood.view.activities.activities
 
 import android.content.Intent
 import android.os.Build
@@ -10,6 +10,7 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import com.example.goodfood.R
 import com.example.goodfood.databinding.ActivitySplashBinding
 
 class SplashActivity : AppCompatActivity() {
@@ -31,7 +32,7 @@ class SplashActivity : AppCompatActivity() {
             )
         }
 
-        val splashAnimation = AnimationUtils.loadAnimation(this,R.anim.anim_splash)
+        val splashAnimation = AnimationUtils.loadAnimation(this, R.anim.anim_splash)
         splashBinding.tvAppName.animation = splashAnimation
         splashAnimation.setAnimationListener(object : Animation.AnimationListener{
             override fun onAnimationStart(animation: Animation?) {
@@ -40,7 +41,7 @@ class SplashActivity : AppCompatActivity() {
 
             override fun onAnimationEnd(animation: Animation?) {
                Handler(Looper.getMainLooper()).postDelayed({
-                   startActivity(Intent(this@SplashActivity,MainActivity::class.java))
+                   startActivity(Intent(this@SplashActivity, MainActivity::class.java))
                    finish()
                },1000)
             }

@@ -1,4 +1,4 @@
-package com.example.goodfood.ui.dashboard
+package com.example.goodfood.view.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.goodfood.R
+import com.example.goodfood.viewmodel.DashboardViewModel
 
 class DashboardFragment : Fragment() {
 
