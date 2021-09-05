@@ -5,4 +5,7 @@
     <string name="splash_screen_title">Good Food</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_add_menu">Add Dishes</string>
+    <string name="title_select_image">Select Image From</string>
+    <string name="lbl_camera">Camera</string>
+    <string name="lbl_gallery">Gallery</string>
 </resources>
