@@ -8,6 +8,12 @@ import android.widget.Toast
 import com.example.goodfood.R
 import com.example.goodfood.databinding.ActivityAddUpdateDishBinding
 import com.example.goodfood.databinding.DialogCustomImageSelectionBinding
+import com.karumi.dexter.Dexter
+import android.Manifest
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 
 class AddUpdateDishActivity : AppCompatActivity(),View.OnClickListener {
     private lateinit var mBinding: ActivityAddUpdateDishBinding
@@ -48,7 +54,25 @@ class AddUpdateDishActivity : AppCompatActivity(),View.OnClickListener {
         dialog.setContentView(binding.root)
 
         binding.tvCamera.setOnClickListener {
-            Toast.makeText(this,"Camera clicked",Toast.LENGTH_SHORT).show()
+          //  Toast.makeText(this,"Camera clicked",Toast.LENGTH_SHORT).show()
+            Dexter.withContext(this).withPermissions(  // Declaration for taking multiple permissions
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA
+            ).withListener(object:MultiplePermissionsListener{
+                override fun onPermissionsChecked(p0: MultiplePermissionsReport?) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    p0: MutableList<PermissionRequest>?,
+                    p1: PermissionToken?
+                ) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+
             dialog.dismiss()
 
         }
