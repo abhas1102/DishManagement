@@ -13,6 +13,7 @@
             android:name=".view.activities.activities.AddUpdateDishActivity"
             android:label="Add Dish"
             android:theme="@style/Theme.GoodFood.NoActionBar"
+            android:configChanges="orientation"
             android:exported="true" />
         <activity
             android:name=".view.activities.activities.SplashActivity"
