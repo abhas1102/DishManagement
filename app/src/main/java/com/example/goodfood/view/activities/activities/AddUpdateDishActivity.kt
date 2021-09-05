@@ -85,7 +85,28 @@ class AddUpdateDishActivity : AppCompatActivity(),View.OnClickListener {
 
         }
         binding.tvGallery.setOnClickListener {
-            Toast.makeText(this,"Gallery selected",Toast.LENGTH_SHORT).show()
+          //  Toast.makeText(this,"Gallery selected",Toast.LENGTH_SHORT).show()
+            Dexter.withContext(this).withPermissions(  // Declaration for taking multiple permissions
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA
+            ).withListener(object:MultiplePermissionsListener{
+                override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+                    if (report!!.areAllPermissionsGranted()){
+                        Toast.makeText(this@AddUpdateDishActivity,"Gallery permission now",Toast.LENGTH_SHORT).show()
+
+                    }
+                }
+
+                override fun onPermissionRationaleShouldBeShown(  // This is for the case when user denied the permission
+                    permissions: MutableList<PermissionRequest>?,
+                    token: PermissionToken?
+                ) {
+                    showRationalDialogForPermissions()
+                }
+
+            }).onSameThread().check() // These all permissions grant process should be run on same thread
+
             dialog.dismiss()
 
         }
