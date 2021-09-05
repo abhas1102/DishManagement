@@ -10,6 +10,11 @@ import com.example.goodfood.databinding.ActivityAddUpdateDishBinding
 import com.example.goodfood.databinding.DialogCustomImageSelectionBinding
 import com.karumi.dexter.Dexter
 import android.Manifest
+import android.app.AlertDialog
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
@@ -60,18 +65,21 @@ class AddUpdateDishActivity : AppCompatActivity(),View.OnClickListener {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA
             ).withListener(object:MultiplePermissionsListener{
-                override fun onPermissionsChecked(p0: MultiplePermissionsReport?) {
-                    TODO("Not yet implemented")
+                override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+                    if (report!!.areAllPermissionsGranted()){
+                        Toast.makeText(this@AddUpdateDishActivity,"Camera permission now",Toast.LENGTH_SHORT).show()
+
+                    }
                 }
 
-                override fun onPermissionRationaleShouldBeShown(
-                    p0: MutableList<PermissionRequest>?,
-                    p1: PermissionToken?
+                override fun onPermissionRationaleShouldBeShown(  // This is for the case when user denied the permission
+                    permissions: MutableList<PermissionRequest>?,
+                    token: PermissionToken?
                 ) {
-                    TODO("Not yet implemented")
+                    showRationalDialogForPermissions()
                 }
 
-            })
+            }).onSameThread().check() // These all permissions grant process should be run on same thread
 
             dialog.dismiss()
 
@@ -84,5 +92,26 @@ class AddUpdateDishActivity : AppCompatActivity(),View.OnClickListener {
 
         dialog.show() // We use this to dialog to appear
 
+    }
+
+    private fun showRationalDialogForPermissions(){
+        AlertDialog.Builder(this).setMessage("It looks like you have turned off permissions" +
+                "required for this feature. It can be enabled under application settings")
+            .setPositiveButton("GO TO SETTINGS") // If user wants to give permissions
+            {_,_ ->
+                try {
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    val uri = Uri.fromParts("package",packageName,null)
+                    intent.data = uri
+                    startActivity(intent)
+                }catch (e:ActivityNotFoundException){
+                    e.printStackTrace()
+                }
+
+            }
+            .setNegativeButton("Cancel"){  // If user doesn't want to give permissions
+                dialog,_ ->
+                dialog.dismiss()
+            }.show()
     }
 }
