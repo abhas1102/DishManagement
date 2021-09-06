@@ -18,6 +18,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
 import android.provider.Settings
+import androidx.core.content.ContextCompat
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -146,6 +147,7 @@ class AddUpdateDishActivity : AppCompatActivity(),View.OnClickListener {
                 data?.extras?.let {
                     val thumbnail:Bitmap = data.extras!!.get("data") as Bitmap
                     mBinding.ivDishImage.setImageBitmap(thumbnail)
+                    mBinding.ivDishImage.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_vector_edit))
                 }
 
             }
