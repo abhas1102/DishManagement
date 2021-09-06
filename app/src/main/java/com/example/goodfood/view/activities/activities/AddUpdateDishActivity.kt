@@ -10,10 +10,13 @@ import com.example.goodfood.databinding.ActivityAddUpdateDishBinding
 import com.example.goodfood.databinding.DialogCustomImageSelectionBinding
 import com.karumi.dexter.Dexter
 import android.Manifest
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
+import android.provider.MediaStore
 import android.provider.Settings
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -71,8 +74,9 @@ class AddUpdateDishActivity : AppCompatActivity(),View.OnClickListener {
                 override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
                     report?.let {
                         if (report.areAllPermissionsGranted()){
-                            Toast.makeText(this@AddUpdateDishActivity,"Camera permission now",Toast.LENGTH_SHORT).show()
-
+                           // Toast.makeText(this@AddUpdateDishActivity,"Camera permission now",Toast.LENGTH_SHORT).show()
+                            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                            startActivityForResult(intent,CAMERA)
                         }
                     }
 
@@ -135,6 +139,19 @@ class AddUpdateDishActivity : AppCompatActivity(),View.OnClickListener {
 
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK){
+            if (requestCode == CAMERA){
+                data?.extras?.let {
+                    val thumbnail:Bitmap = data.extras!!.get("data") as Bitmap
+                    mBinding.ivDishImage.setImageBitmap(thumbnail)
+                }
+
+            }
+        }
+    }
+
     private fun showRationalDialogForPermissions(){
         AlertDialog.Builder(this).setMessage("It looks like you have turned off permissions" +
                 "required for this feature. It can be enabled under application settings")
@@ -154,5 +171,9 @@ class AddUpdateDishActivity : AppCompatActivity(),View.OnClickListener {
                 dialog,_ ->
                 dialog.dismiss()
             }.show()
+    }
+
+    companion object{
+        const val CAMERA = 1
     }
 }
