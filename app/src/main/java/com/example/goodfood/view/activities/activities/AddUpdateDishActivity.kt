@@ -18,6 +18,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
 import android.provider.Settings
+import android.util.Log
 import androidx.core.content.ContextCompat
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -103,7 +104,10 @@ class AddUpdateDishActivity : AppCompatActivity(),View.OnClickListener {
 
             ).withListener(object:PermissionListener{
                 override fun onPermissionGranted(p0: PermissionGrantedResponse?) {
-                    Toast.makeText(this@AddUpdateDishActivity,"Gallery permission now",Toast.LENGTH_SHORT).show()
+                  //  Toast.makeText(this@AddUpdateDishActivity,"Gallery permission now",Toast.LENGTH_SHORT).show()
+                    val galleryIntent = Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                    startActivityForResult(galleryIntent, GALLERY)
+
                 }
 
                 override fun onPermissionDenied(p0: PermissionDeniedResponse?) {
@@ -151,6 +155,17 @@ class AddUpdateDishActivity : AppCompatActivity(),View.OnClickListener {
                 }
 
             }
+
+           else if (requestCode == GALLERY){
+                data?.let {
+                    val selectedPhotoUri = data.data // it contains the data property which is a Uri
+                    mBinding.ivDishImage.setImageURI(selectedPhotoUri)
+                    mBinding.ivDishImage.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_vector_edit))
+                }
+
+            }
+        } else if(resultCode==Activity.RESULT_CANCELED){
+            Log.e("cancelled","Cancelled image selection")
         }
     }
 
@@ -177,5 +192,6 @@ class AddUpdateDishActivity : AppCompatActivity(),View.OnClickListener {
 
     companion object{
         const val CAMERA = 1
+        const val GALLERY = 2
     }
 }
