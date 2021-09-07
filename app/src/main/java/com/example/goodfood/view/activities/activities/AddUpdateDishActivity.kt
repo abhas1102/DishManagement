@@ -22,14 +22,18 @@ import android.net.Uri
 import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.example.goodfood.databinding.DialogCustomListBinding
+import com.example.goodfood.view.adapters.CustomListItemAdapter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -256,6 +260,18 @@ class AddUpdateDishActivity : AppCompatActivity(),View.OnClickListener {
             e.printStackTrace()
         }
             return file.absolutePath // It will return the directory in which the file exists as well as name of the file
+    }
+
+    private fun customItemsDialog(title:String,itemsList:List<String>,selection:String){
+        val customListDialog = Dialog(this)
+        val binding:DialogCustomListBinding = DialogCustomListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.tvTitle.text = title
+        binding.rvList.layoutManager = LinearLayoutManager(this)
+
+        val adapter = CustomListItemAdapter(this,itemsList,selection)
+        binding.rvList.adapter = adapter
+        customListDialog.show()
     }
 
     companion object{
