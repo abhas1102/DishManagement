@@ -13,6 +13,8 @@ import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -28,6 +30,11 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.karumi.dexter.listener.single.PermissionListener
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStream
+import java.util.*
 
 class AddUpdateDishActivity : AppCompatActivity(),View.OnClickListener {
     private lateinit var mBinding: ActivityAddUpdateDishBinding
@@ -193,8 +200,27 @@ class AddUpdateDishActivity : AppCompatActivity(),View.OnClickListener {
             }.show()
     }
 
+    private fun saveImageToInternalStorage(bitmap: Bitmap):String{
+        val wrapper = ContextWrapper(applicationContext) // Which application the bitmap we are trying to assign is stored
+
+        var file = wrapper.getDir(IMAGE_DIRECTORY,Context.MODE_PRIVATE) // This will accessible by our application
+        file = File(file,"${UUID.randomUUID()}.jpg")
+
+        try {
+            val stream:OutputStream = FileOutputStream(file) // We need output stream because we need to compress our Bitmap
+            bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream)
+            stream.flush()
+            stream.close()
+        }catch (e: IOException){
+            e.printStackTrace()
+        }
+            return file.absolutePath // It will return the directory in which the file exists as well as name of the file
+    }
+
     companion object{
-        const val CAMERA = 1
-        const val GALLERY = 2
+       private const val CAMERA = 1
+       private const val GALLERY = 2
+        private const val IMAGE_DIRECTORY = "GoodFoodImages"
+
     }
 }
