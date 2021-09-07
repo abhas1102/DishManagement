@@ -337,7 +337,7 @@ class AddUpdateDishActivity : AppCompatActivity(),View.OnClickListener {
     private fun customItemsDialog(title:String,itemsList:List<String>,selection:String){
         mCustomListDialog = Dialog(this@AddUpdateDishActivity)
         val binding:DialogCustomListBinding = DialogCustomListBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        mCustomListDialog.setContentView(binding.root)
         binding.tvTitle.text = title
         binding.rvList.layoutManager = LinearLayoutManager(this@AddUpdateDishActivity)
 
