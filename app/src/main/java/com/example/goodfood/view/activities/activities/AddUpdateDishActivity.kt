@@ -17,12 +17,19 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -38,6 +45,7 @@ import java.util.*
 
 class AddUpdateDishActivity : AppCompatActivity(),View.OnClickListener {
     private lateinit var mBinding: ActivityAddUpdateDishBinding
+    private var mImagePath:String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -160,6 +168,9 @@ class AddUpdateDishActivity : AppCompatActivity(),View.OnClickListener {
                     val thumbnail:Bitmap = data.extras!!.get("data") as Bitmap
                    // mBinding.ivDishImage.setImageBitmap(thumbnail)
                     Glide.with(this).load(thumbnail).centerCrop().into(mBinding.ivDishImage)
+                    mImagePath = saveImageToInternalStorage(thumbnail) // Saved captured image to this path in device
+                    Log.e("ImagePath", mImagePath)
+
                     mBinding.ivDishImage.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_vector_edit))
                 }
 
@@ -169,7 +180,37 @@ class AddUpdateDishActivity : AppCompatActivity(),View.OnClickListener {
                 data?.let {
                     val selectedPhotoUri = data.data // it contains the data property which is a Uri
                    // mBinding.ivDishImage.setImageURI(selectedPhotoUri)
-                    Glide.with(this).load(selectedPhotoUri).centerCrop().into(mBinding.ivDishImage)
+                    Glide.with(this).load(selectedPhotoUri).centerCrop().diskCacheStrategy(
+                        DiskCacheStrategy.ALL).listener(object :RequestListener<Drawable>{
+                        override fun onLoadFailed(
+                            e: GlideException?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            Log.e("TAG","error loading image",e)
+                            return false
+                        }
+
+                        override fun onResourceReady(
+                            resource: Drawable?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            dataSource: DataSource?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            resource?.let{
+                                val bitmap:Bitmap = resource.toBitmap()
+                                mImagePath = saveImageToInternalStorage(bitmap)
+                                Log.i("ImagePath",mImagePath)
+
+                            }
+                            return false
+
+                        }
+
+                    }).into(mBinding.ivDishImage)
+
                     mBinding.ivDishImage.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.ic_vector_edit))
                 }
 
@@ -203,7 +244,7 @@ class AddUpdateDishActivity : AppCompatActivity(),View.OnClickListener {
     private fun saveImageToInternalStorage(bitmap: Bitmap):String{
         val wrapper = ContextWrapper(applicationContext) // Which application the bitmap we are trying to assign is stored
 
-        var file = wrapper.getDir(IMAGE_DIRECTORY,Context.MODE_PRIVATE) // This will accessible by our application
+        var file = wrapper.getDir(IMAGE_DIRECTORY,Context.MODE_PRIVATE) // We will assign the directory in which we want to store & This will accessible by our application
         file = File(file,"${UUID.randomUUID()}.jpg")
 
         try {
