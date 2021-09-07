@@ -67,7 +67,7 @@
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
-                android:hint="@string/title_home"
+                android:hint="@string/title_add_food_title"
                 android:textColorHint="@color/blue_grey_700"
 
                 app:layout_constraintEnd_toEndOf="parent"
@@ -92,7 +92,7 @@
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
-                android:hint="@string/title_home"
+                android:hint="@string/title_type"
                 android:textColorHint="@color/blue_grey_700"
 
                 app:layout_constraintEnd_toEndOf="parent"
@@ -119,7 +119,7 @@
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
-                android:hint="@string/title_home"
+                android:hint="@string/title_category"
                 android:textColorHint="@color/blue_grey_700"
 
                 app:layout_constraintEnd_toEndOf="parent"
@@ -146,7 +146,7 @@
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
-                android:hint="@string/title_home"
+                android:hint="@string/title_ingredients"
 
                 android:textColorHint="@color/blue_grey_700"
 
@@ -173,7 +173,7 @@
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
-                android:hint="@string/title_home"
+                android:hint="@string/title_cooking_time"
                 android:textColorHint="@color/blue_grey_700"
 
                 app:layout_constraintEnd_toEndOf="parent"
@@ -200,7 +200,7 @@
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
-                android:hint="@string/title_home"
+                android:hint="@string/title_cooking_direction"
                 android:textColorHint="@color/blue_grey_700"
 
                 app:layout_constraintEnd_toEndOf="parent"

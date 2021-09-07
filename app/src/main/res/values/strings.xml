@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">GoodFood</string>
     <string name="title_home">Home</string>
+    <string name="title_add_food_title">Title</string>
+    <string name="title_type">Food Type</string>
+    <string name="title_category">Food Category</string>
+    <string name="title_ingredients">Food Ingredients</string>
+    <string name="title_cooking_time">Cook time in minutes</string>
+    <string name="title_cooking_direction">Direction to cook</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="splash_screen_title">Good Food</string>
     <string name="title_notifications">Notifications</string>
@@ -11,4 +17,11 @@
     <string name="title_select_dish_type">Select Dish Type</string>
     <string name="title_select_dish_category">Select Dish Category</string>
     <string name="title_select_dish_cooking_time">Dish Cooking Time</string>
+    <string name="err_message_select_dish_image">Image not selected</string>
+    <string name="err_message_select_dish_title">Select Dish Title</string>
+    <string name="err_message_select_dish_type">Select Dish Type</string>
+    <string name="err_message_select_dish_category">Select Dish Category</string>
+    <string name="err_message_select_dish_ingredients">Ingredients not Specified</string>
+    <string name="err_message_select_dish_cooking_direction">Specify Cooking Direction</string>
+    <string name="err_message_select_dish_cooking_time">Select Cooking Time</string>
 </resources>

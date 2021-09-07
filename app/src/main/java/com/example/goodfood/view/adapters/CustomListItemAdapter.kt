@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.goodfood.databinding.ItemCustomListBinding
+import com.example.goodfood.view.activities.activities.AddUpdateDishActivity
 
 class CustomListItemAdapter(private val activity:Activity,
                             private val listItems:List<String>,
-                            private val seletion:String)
+                            private val selection:String)
     : RecyclerView.Adapter<CustomListItemAdapter.ViewHolder>(){
 
         class ViewHolder(view: ItemCustomListBinding):RecyclerView.ViewHolder(view.root){ // viewholder describes an item view and metadata about it's place in recycler view
@@ -23,6 +24,12 @@ class CustomListItemAdapter(private val activity:Activity,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) { //How does every item is going to look like, bind views with position
         val item = listItems[position]
         holder.tvText.text = item
+
+        holder.itemView.setOnClickListener {
+            if (activity is AddUpdateDishActivity){
+                activity.selectedListItem(item,selection)
+            }
+        }
 
     }
 
