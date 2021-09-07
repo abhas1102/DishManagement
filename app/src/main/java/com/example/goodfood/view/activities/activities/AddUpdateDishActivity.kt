@@ -33,6 +33,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.goodfood.databinding.DialogCustomListBinding
+import com.example.goodfood.utils.Constants
 import com.example.goodfood.view.adapters.CustomListItemAdapter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -58,6 +59,10 @@ class AddUpdateDishActivity : AppCompatActivity(),View.OnClickListener {
         setUpActionBar()
 
         mBinding.ivAddDishImage.setOnClickListener(this)
+        mBinding.etType.setOnClickListener(this)
+        mBinding.etCategory.setOnClickListener(this)
+        mBinding.etCookingTime.setOnClickListener(this)
+
     }
 
     private fun setUpActionBar() {
@@ -75,7 +80,24 @@ class AddUpdateDishActivity : AppCompatActivity(),View.OnClickListener {
                   customImageSelectionDialog()
                     return
                 }
+                R.id.et_type->{
+                    customItemsDialog(resources.getString((R.string.title_select_dish_type)),
+                    Constants.dishTypes(),Constants.DISH_TYPE)
+                    return
+                }
+                R.id.et_category->{
+                    customItemsDialog(resources.getString((R.string.title_select_dish_category)),
+                        Constants.dishCategories(),Constants.DISH_CATEGORY)
+                    return
+                }
+
+                R.id.et_cooking_time->{
+                    customItemsDialog(resources.getString((R.string.title_select_dish_cooking_time)),
+                        Constants.dishCookTime(),Constants.DISH_COOKING_TIME)
+                    return
+                }
             }
+
         }
 
 
