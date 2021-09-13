@@ -10,6 +10,8 @@ import com.example.goodfood.model.entities.GoodFood
 @Database(entities = [GoodFood::class],version = 1,)
 abstract class GoodFoodRoomDatabase:RoomDatabase() {
 
+    abstract fun goodFoodDao():GoodFoodDao
+
     companion object{
         @Volatile
         private var INSTANCE: GoodFoodRoomDatabase? = null
