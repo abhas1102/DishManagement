@@ -1,10 +1,9 @@
 package com.example.goodfood.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.goodfood.model.database.GoodFoodRepository
 import com.example.goodfood.model.entities.GoodFood
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
@@ -14,6 +13,8 @@ class GoodFoodViewModel(private val repository: GoodFoodRepository):ViewModel() 
     fun insert(dish:GoodFood) = viewModelScope.launch {
         repository.insertGoodFoodData(dish)
     }
+
+    val allDishesList: LiveData<List<GoodFood>> = repository.allDishesList.asLiveData()
 
 }
 
