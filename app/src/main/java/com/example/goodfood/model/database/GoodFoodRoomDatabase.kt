@@ -10,7 +10,7 @@ import com.example.goodfood.model.entities.GoodFood
 @Database(entities = [GoodFood::class],version = 1,)
 abstract class GoodFoodRoomDatabase:RoomDatabase() {
 
-    abstract fun goodFoodDao():GoodFoodDao
+    abstract fun goodFoodDao(): GoodFoodDao
 
     companion object{
         @Volatile
@@ -23,8 +23,8 @@ abstract class GoodFoodRoomDatabase:RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     GoodFoodRoomDatabase::class.java,
-                    "word_database"
-                ).build()
+                    "good_food_database"
+                ).fallbackToDestructiveMigration().build()
                 INSTANCE = instance
                 // return instance
                 instance

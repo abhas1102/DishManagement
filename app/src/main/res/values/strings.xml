@@ -1,15 +1,15 @@
 <resources>
     <string name="app_name">GoodFood</string>
-    <string name="title_home">Home</string>
+    <string name="title_all_dishes">All dishes</string>
     <string name="title_add_food_title">Title</string>
     <string name="title_type">Food Type</string>
     <string name="title_category">Food Category</string>
     <string name="title_ingredients">Food Ingredients</string>
     <string name="title_cooking_time">Cook time in minutes</string>
     <string name="title_cooking_direction">Direction to cook</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_favorite_dishes">Favorite</string>
     <string name="splash_screen_title">Good Food</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_randomo_dish">Random Dish</string>
     <string name="title_add_menu">Add Dishes</string>
     <string name="title_select_image">Select Image From</string>
     <string name="lbl_camera">Camera</string>
