@@ -23,6 +23,7 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.text.TextUtils
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
@@ -33,9 +34,13 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.example.goodfood.application.GoodFoodApplication
 import com.example.goodfood.databinding.DialogCustomListBinding
+import com.example.goodfood.model.entities.GoodFood
 import com.example.goodfood.utils.Constants
 import com.example.goodfood.view.adapters.CustomListItemAdapter
+import com.example.goodfood.viewmodel.GoodFoodViewModel
+import com.example.goodfood.viewmodel.GoodFoodViewModelFactory
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -54,6 +59,10 @@ class AddUpdateDishActivity : AppCompatActivity(),View.OnClickListener {
     private var mImagePath:String = ""
 
     private lateinit var mCustomListDialog:Dialog
+
+    private val mGoodFoodViewModel:GoodFoodViewModel by viewModels {
+        GoodFoodViewModelFactory((application as GoodFoodApplication).repository)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -140,7 +149,17 @@ class AddUpdateDishActivity : AppCompatActivity(),View.OnClickListener {
 
                         }
                         else ->{
-                            Toast.makeText(this@AddUpdateDishActivity,"All entries are valid", Toast.LENGTH_SHORT).show()
+                          //  Toast.makeText(this@AddUpdateDishActivity,"All entries are valid", Toast.LENGTH_SHORT).show()
+                            val goodFoodDetails:GoodFood = GoodFood(
+                                mImagePath,Constants.DISH_IMAGE_SOURCE_LOCAL,
+                                title,type, category,ingredients,cookingTimeInMinutes,cookingDirection,
+                                false
+                            )
+                            mGoodFoodViewModel.insert(goodFoodDetails)
+                            Toast.makeText(this@AddUpdateDishActivity,"You successfully added your dish details",
+                            Toast.LENGTH_SHORT).show()
+                            Log.i("Insertion","Success")
+                            finish() // finish means we close our current activity on cliking
 
                         }
                     }
@@ -229,6 +248,7 @@ class AddUpdateDishActivity : AppCompatActivity(),View.OnClickListener {
             }).onSameThread().check() // These all permissions grant process should be run on same thread
 
             dialog.dismiss()
+
 
         }
 
